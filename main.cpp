@@ -3,6 +3,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <conio.h>
+#include <graphics.h>
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -42,4 +43,34 @@ void file:: pack() {
 
 
 
- int main(){}
+ int main(){
+ 
+     int ch, i, j;
+
+     return 0;
+ }
+
+
+ void user() {
+     int choice;
+     while (1) {
+         cout << "==============Are you a=============\n";
+         cout << "1.Customer?\n";
+         cout << "2.Admin?\n";
+         cin >> choice;
+         switch (choice) {
+         case 1: customer();
+             break;
+         case 2: admin();
+             break;
+         default: cout << "not a valid option, try again.......";
+             break;
+         }
+     }
+ }
+
+
+
+ void password(string pass) {
+
+ }
