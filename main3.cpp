@@ -14,17 +14,20 @@ using namespace std;
 class complaint {  
     string name,email,subj,desc,location,city,phoneNo, buffer,frrn;
 
-    void pack();
-    void write_to_file();
+    public:
+    void pack(); //done
+    void write_to_file(); //done
     void unpack();
-    void create_rrn();
+    void create_rrn(); //done
     void view_complaint();
     void update_complaint();
     void print_complaint();
     void delete_complaint();
-    void add_complaint();
+    void add_complaint(); //done
     int search(string key);
     int rrn;
+
+
 
 
 };
@@ -35,6 +38,7 @@ void complaint::pack() {
     buffer=frrn+'|'+name+'|'+email+'|'+phoneNo+'|'+city+'|'+subj+'|'+desc+'$'+'\n';
 }
 
+/* --------------------------------------FUNCTION TO UNPACK ALL DATA FROM RECORD TO SHOW IN OUTPUT-----------------------*/
 void complaint::unpack() {
     int ch=1,i=0;
     frrn.erase();
@@ -70,21 +74,71 @@ void complaint::unpack() {
         desc+=buffer[i++];
 }
 
+/* --------------------------------------FUNCTION TO write these into file-----------------------*/
+
+void complaint:: write_to_file() {
+    
+    fstream file;
+    file.open("3.txt",ios::out|ios::app);
+    file<<buffer;
+    file.close();
+
+}
+
+/* --------------------------------------FUNCTION TO create a complaint-----------------------*/
+
+void complaint::add_complaint() {
+    system("cls");
+	cout<<"\n";
+    	cout<<"\t\t ================================================\n";
+	cout<<"\t\t|   Complaint Registration system |\n";
+	cout<<"\t\t ================================================\n\n\n";
+	cout <<"\nAdd Complaint Details of Customer\n";
+	cout <<"_____________________________________ \n\n";
+	cout<< "Enter Customer Name: ";
+	cin.ignore();
+	getline(cin, name);
+	cout<<"Enter your Email : ";
+	cin>>email;
+    cout<<"Enter your Phone Number : ";
+    cin>>phoneNo;
+    cout<<"Enter your City : ";
+    cin>>city;
+    cout<<"Please enter the subject of the complaint(in about 10-20 words) : ";
+    cin.ignore();
+    getline(cin, subj);
+	cout << "Complaint Description:";
+	cout<<"( 1000 words maximum ) \n";
+	cin.ignore();
+	getline(cin, desc);
+    create_rrn();
+    pack();
+    write_to_file();
+	cout<<"==========================================================================="<<endl;
+    	cout << "Complaint added Successfully"<<endl;
+    	cout<<"==========================================================================="<<endl;
+}
+
+void complaint::create_rrn() {
+    int rrn=0;
+    rrn=rrn+1;
+    frrn=to_string(rrn);
+}
+
 /* --------------------------------------MAIN MENU OF THE PROGRAM-----------------------*/
 
 int main_menu() {
     int choice;
     system("cls");
-    borderNoDelay();
-    gotoXY(16,4);
+    gotoxy(16,4);
     printf("*****  E-Complaint Registration System ***** ");
-    gotoXY(12,6);
+    gotoxy(12,6);
     cout<<"Press  1. ----> ADMIN.";
-    gotoXY(12,8);
+    gotoxy(12,8);
     cout<<"Press  2. ----> Customer.";
-    gotoXY(12,18);
+    gotoxy(12,18);
     cout<<"Press  3. ----> Quit Program.";
-    gotoXY(16,22);
+    gotoxy(16,22);
     cout<<"Input number associated with your user type (or 3 to exit) :  ====> ";
     cin>>choice;
     return choice;
@@ -215,6 +269,9 @@ int customer_menu() {
 /* --------------------------------------MAIN FUNCTION OF THE PROGRAM-----------------------*/
 
 int main() {
+
+    system("color 02");
+    complaint comp;
     int ch;
 
     while (1)
@@ -230,12 +287,12 @@ int main() {
             break;
         case 3:
             cout<<"-------------------THANK YOU, HAVE A GOOD DAY----------------";
-            gotoXY(16,22);
+            gotoxy(16,22);
             sleep(3000);
             exit(0);
         default:
             cout<<"++++++++++++++++++++++++++++INVALID INPUT!!!!! TRY AGAIN++++++++++++++";
-            gotoXY(16,22);
+            gotoxy(16,22);
         }
     }
 
