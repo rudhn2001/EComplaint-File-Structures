@@ -19,8 +19,8 @@ class complaint {
     void write_to_file(); //done
     void unpack(); //done
     void create_rrn(); //done
-    void view_complaint();
-    void update_complaint();
+    void view_complaint(); //done
+    void update_complaint(); //pending some stuff
     void print_complaint(); //done
     void delete_complaint(); // not needed i believe
     void add_complaint(); //done
@@ -31,7 +31,7 @@ class complaint {
     int list_rrn();
 
     complaint() {
-        stats='pending';
+        stats='w';
     }
 
 
@@ -145,9 +145,8 @@ void complaint::create_rrn() {
 }
 
 /* --------------------------------------function to count rrn-----------------------*/
-int complaint::rrn_count() {
-        
-}
+
+
 
 /* --------------------------------------function to Print the complaint-----------------------*/
 
@@ -177,7 +176,7 @@ void complaint::print_complaint() {
 	cout<<"---------------------------------------------------------------------------"<<endl;
 
 
-    if(rrn_list[position]==NULL) {
+    if(rrn_list[position]==-1) {
     	cout << "\tThere is no Complaint to show\n\t\t\tSo The List is Empty\n\n\n";
     }
     else {
@@ -246,6 +245,161 @@ void complaint::print_complaint() {
     }
 }
 
+/* --------------------------------------function to update the status of the program-----------------------*/
+
+void complaint::update_complaint() {
+    int position=0,choice;
+    fstream outputFile,file1;
+
+    outputFile.open("complaint.txt");
+    system("cls");
+
+
+        cout<<"\n";
+ 	cout<<"\t\t ================================================\n";
+ 	cout<<"\t\t|   Complaint Management System - TRAVEL AGENCY |\n";
+ 	cout<<"\t\t ================================================\n\n\n";
+
+    cout<<"\n";
+	cout<<"---------------------------------------------------------------------------"<<endl;
+	cout <<"\t\tHere is the Complaint list\n"; 
+	cout<<"---------------------------------------------------------------------------"<<endl;
+    if(rrn_list[position]==-1) {
+    	cout << "\tThere is no Complaint to show\n\t\t\tSo The List is Empty\n\n\n";
+    }
+    else {
+            while(!outputFile.eof())
+            {
+                position=outputFile.tellg();
+                buffer.erase();
+                unpack();
+                getline(outputFile,buffer);
+                rrn_list[++count]=position;
+                cout <<"\t\t\t"<<position<<"."<<"\t"<<subj<<"\n";
+            }
+        	cout<<"---------------------------------------------------------------------------"<<endl;
+	        cout <<"\t\tEnter the Complaint number associated with the subject : "; 
+	        cout<<"---------------------------------------------------------------------------"<<endl;
+            cin>>choice;
+            buffer.erase();
+            position=rrn_list[choice];
+            outputFile.seekg(position,ios::beg);
+            getline(outputFile,buffer);
+            unpack();
+            cout<<"\t\t-------------------------------------------------\n";
+            cout<<"\t\t|\t1. Seen  \t\t\t\t|\n";
+            cout<<"\t\t-------------------------------------------------\n";
+            cout<<"\t\t-------------------------------------------------\n";
+            cout<<"\t\t|\t2. Verified \t\t\t|\n";
+            cout<<"\t\t-------------------------------------------------\n";
+            cout<<"\t\t-------------------------------------------------\n";
+            cout<<"\t\t|\t3. Executing  \t\t\t\t|\n";
+            cout<<"\t\t-------------------------------------------------\n\n";
+            cout<<"\t\t-------------------------------------------------\n";
+            cout<<"\t\t|\t3. done  \t\t\t\t|\n";
+            cout<<"\t\t-------------------------------------------------\n\n";
+            cout<<"\t\t-------------------------------------------------\n";
+            cout<<"\t\t|\t3. cancelled  \t\t\t\t|\n";
+            cout<<"\t\t-------------------------------------------------\n\n";
+            cout<<"\t\tInput number associated with the option :  ====> ";
+            cin>>choice;;
+            switch (choice)
+            {
+            case 1: stats='seen';
+                break;
+            
+            case 2: stats='verified';
+                break;
+            
+            case 3: stats='executing';
+                break;
+            
+            case 4: stats='done';
+                break;
+            
+            case 5: stats='cancelled';
+                break;
+
+            default:    cout << "\n\n\t\tInvalid choice.\n" << '\n';
+                break;
+            }
+            pack();
+            write_to_file();
+}
+
+}
+
+/* --------------------------------------function to Print the complaint-----------------------*/
+
+void complaint::print_complaint() {
+    int position=0,choice;
+    system("cls");
+    string fname;
+    fstream outputFile,file1;
+
+    outputFile.open("complaint.txt");
+
+
+
+
+
+    cout<<"\n";
+ 	cout<<"\t\t ================================================\n";
+ 	cout<<"\t\t|   Complaint Management System - TRAVEL AGENCY |\n";
+ 	cout<<"\t\t ================================================\n\n\n";
+    cout<<"\n";
+	cout<<"---------------------------------------------------------------------------"<<endl;
+	cout <<"\t\tHere is the Complaint list\n"; 
+	cout<<"---------------------------------------------------------------------------"<<endl;
+
+
+    if(rrn_list[position]==-1) {
+    	cout << "\tThere is no Complaint to show\n\t\t\tSo The List is Empty\n\n\n";
+    }
+    else {
+            while(!outputFile.eof())
+            {
+                position=outputFile.tellg();
+                buffer.erase();
+                unpack();
+                getline(outputFile,buffer);
+                rrn_list[++count]=position;
+                cout <<"\t\t\t"<<position<<"."<<"\t"<<subj<<"\n";
+            }
+        	cout<<"---------------------------------------------------------------------------"<<endl;
+	        cout <<"\t\tEnter the Complaint number associated with the subject : "; 
+	        cout<<"---------------------------------------------------------------------------"<<endl;
+            cin>>choice;
+            buffer.erase();
+            position=rrn_list[choice];
+            outputFile.seekg(position,ios::beg);
+            getline(outputFile,buffer);
+            unpack();
+
+		        cout <<"Complaint Number : "<<position;
+				cout <<"\n";
+				cout<<"Customer Name: "<<name<<endl;
+				cout<<"Email : "<<email<<endl;
+            	cout<<"Contact Number : "<<phoneNo<<endl;
+            	cout<<"City : "<<city<<endl;
+				cout<<"____________________________________________________________________________"<<endl;
+				cout<<"Complaint Subject: "<<endl;
+				cout<<"----------------------"<<endl;
+				cout<< subj; 
+				cout <<"\n";
+				cout<<"____________________________________________________________________________"<<endl;
+                				cout<<"____________________________________________________________________________"<<endl;
+				cout<<"Complaint Description: "<<endl;
+				cout<<"----------------------"<<endl;
+				cout<< desc; 
+				cout <<"\n";
+				cout<<"____________________________________________________________________________"<<endl;
+            	cout<<"----------------------"<<endl;
+            	cout<<"Status: "<<stats;
+            outputFile.close();
+    }
+}
+
 /* --------------------------------------MAIN MENU OF THE PROGRAM-----------------------*/
 
 int main_menu() {
@@ -266,7 +420,7 @@ int main_menu() {
 	cout<<"\t\t|\t3. EXIT \t\t\t\t|\n";
 	cout<<"\t\t-------------------------------------------------\n\n";
     cout<<"\t\tInput number associated with your user type (or 3 to exit) :  ====> ";
-    choice=getch();
+    cin>>choice;;
     return choice;
 }
 
@@ -330,6 +484,7 @@ int admin_menu() {
                     break;
                 }
             }
+
         }
         	else
 	        {
@@ -338,7 +493,7 @@ int admin_menu() {
                 system ("cls");
                 admin_menu();
             }
-            
+        return 0;
 }
 
 /* --------------------------------------CUSTOMER MENU OF THE PROGRAM-----------------------*/
