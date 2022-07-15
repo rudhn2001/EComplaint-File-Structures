@@ -37,7 +37,7 @@ class complaint {
 
 
 
-};
+}customer;
 
 /* --------------------------------------FUNCTION TO PACK ALL DATA IN ONE RECORD TO STORE IN FILE-----------------------*/
 void complaint::pack() {
@@ -66,18 +66,14 @@ void complaint::unpack() {
     i++;
     while(buffer[i]!='|')
         city+=buffer[i++];
-    desc.erase();
-    i++;
-    while(buffer[i]!='|')
-        desc+=buffer[i++];
     subj.erase();
     i++;
     while(buffer[i]!='|')
         subj+=buffer[i++];
-    // desc.erase();
-    // i++;
-    // while(buffer[i]!='|')
-    //     desc+=buffer[i++];
+    desc.erase();
+    i++;
+    while(buffer[i]!='|')
+        desc+=buffer[i++];
     stats.erase();
     i++;
     while(buffer[i]!='$')
@@ -159,7 +155,7 @@ void complaint::create_rrn() {
 /* --------------------------------------function to Print the complaint-----------------------*/
 
 void complaint::print_complaint() {
-    int position,i,choice;
+    int position,i=0,choice;
     system("cls");
     string fname;
     fstream outputFile,file1;
@@ -199,15 +195,15 @@ for(; i<count; i++) {
             outputFile.seekg(position,ios::beg);
             getline(outputFile,buffer);
             unpack();            
-            // fname=frrn+name+"complaint";
-            file1.open("print.txt",ios::out|ios::app);
-                 	file1<<"\n";
+            fname=name+"complain";
+            file1.open(fname,ios::out|ios::app);
  	file1<<"\t\t ================================================\n";
  	file1<<"\t\t|   Complaint Management System - TRAVEL AGENCY |\n";
  	file1<<"\t\t ================================================\n\n\n";
 		        cout <<"Complaint Number : "<<position;
-				file1 << "Complaint Number : "<<position << endl;
+				file1 << "Complaint Number : "<<position;
 				cout <<"\n";
+                file1<<endl;
 				cout<<"Customer Name: "<<name<<endl;
 				file1 << "Customer Name: "<<name<<endl;
 				cout<<"Email : "<<email<<endl;
@@ -244,7 +240,7 @@ for(; i<count; i++) {
 
 				file1<<"------------------------------------------------------------------------------"<<endl;
 
-                cout<<"printed successfully";
+                cout<<endl<<"printed successfully";
             outputFile.close();
             file1.close();
     }
@@ -252,44 +248,51 @@ for(; i<count; i++) {
 /* --------------------------------------function to update the status of the program-----------------------*/
 
 void complaint::update_complaint() {
-    int position=0,choice;
-    fstream outputFile,file1;
 
-    outputFile.open("complaint.txt");
+    int position,choice,i=0;
     system("cls");
+    int len=0;
+    string fname;
+    fstream outputFile;
+
+    outputFile.open("complaint.txt",ios::in|ios::out);
 
 
-        cout<<"\n";
+
+    cout<<"\n";
  	cout<<"\t\t ================================================\n";
  	cout<<"\t\t|   Complaint Management System - TRAVEL AGENCY |\n";
  	cout<<"\t\t ================================================\n\n\n";
-
     cout<<"\n";
 	cout<<"---------------------------------------------------------------------------"<<endl;
 	cout <<"\t\tHere is the Complaint list\n"; 
 	cout<<"---------------------------------------------------------------------------"<<endl;
-    if(rrn_list[position]==-1) {
-    	cout << "\tThere is no Complaint to show\n\t\t\tSo The List is Empty\n\n\n";
-    }
-    else {
-            while(!outputFile.eof())
-            {
-                position=outputFile.tellg();
-                buffer.erase();
-                unpack();
-                getline(outputFile,buffer);
-                rrn_list[++count]=position;
-                cout <<"\t\t\t"<<position<<"."<<"\t"<<subj<<"\n";
-            }
+
+
+    // if(rrn_list[position]==-1) {
+    // 	cout << "\tThere is no Complaint to show\n\t\t\tSo The List is Empty\n\n\n";
+    // }
+    // else {
+                for(; i<count; i++) {
+                    cout <<"\t\t\t"<<rrn_list[i]<<".";
+                    position=rrn_list[i];
+                    buffer.erase();
+                    outputFile.seekg(position,ios::beg);
+                    getline(outputFile,buffer);
+                    unpack();
+                    cout<<"\t"<<subj<<"\n";
+                }
+            
         	cout<<"---------------------------------------------------------------------------"<<endl;
 	        cout <<"\t\tEnter the Complaint number associated with the subject : "; 
 	        cout<<"---------------------------------------------------------------------------"<<endl;
             cin>>choice;
             buffer.erase();
-            position=rrn_list[choice];
+            position=choice;
             outputFile.seekg(position,ios::beg);
             getline(outputFile,buffer);
             unpack();
+            len=buffer.length();
             cout<<"\t\t-------------------------------------------------\n";
             cout<<"\t\t|\t1. Seen  \t\t\t\t|\n";
             cout<<"\t\t-------------------------------------------------\n";
@@ -300,10 +303,10 @@ void complaint::update_complaint() {
             cout<<"\t\t|\t3. Executing  \t\t\t\t|\n";
             cout<<"\t\t-------------------------------------------------\n\n";
             cout<<"\t\t-------------------------------------------------\n";
-            cout<<"\t\t|\t3. done  \t\t\t\t|\n";
+            cout<<"\t\t|\t4. done  \t\t\t\t|\n";
             cout<<"\t\t-------------------------------------------------\n\n";
             cout<<"\t\t-------------------------------------------------\n";
-            cout<<"\t\t|\t3. cancelled  \t\t\t\t|\n";
+            cout<<"\t\t|\t5. cancelled  \t\t\t\t|\n";
             cout<<"\t\t-------------------------------------------------\n\n";
             cout<<"\t\tInput number associated with the option :  ====> ";
             cin>>choice;;
@@ -328,9 +331,10 @@ void complaint::update_complaint() {
                 break;
             }
             pack();
-            write_to_file();
-}
-
+            outputFile.seekp(position);
+        outputFile.tellp();
+        outputFile<<name<<'|'<<email<<'|'<<phoneNo<<'|'<<city<<'|'<<subj<<'|'<<desc<<'|'<<stats<<'$';
+        outputFile.close();
 }
 
 /* --------------------------------------function to view the complaint-----------------------*/
@@ -392,12 +396,12 @@ void complaint::view_complaint() {
 				cout <<"\n";
 				cout<<"____________________________________________________________________________"<<endl;
                 				cout<<"____________________________________________________________________________"<<endl;
-				// cout<<"Complaint Description: "<<endl;
-				// cout<<"----------------------"<<endl;
-				// cout<< desc; 
-				// cout <<"\n";
-				// cout<<"____________________________________________________________________________"<<endl;
-            	// cout<<"----------------------"<<endl;
+				cout<<"Complaint Description: "<<endl;
+				cout<<"----------------------"<<endl;
+				cout<< desc; 
+				cout <<"\n";
+				cout<<"____________________________________________________________________________"<<endl;
+            	cout<<"----------------------"<<endl;
             	cout<<"Status: "<<stats;
             outputFile.close();
     
@@ -450,7 +454,7 @@ int admin_menu() {
     	{  
             while(1)
             {
-                system("cls");
+                
                     cout<<"\n";
                     cout<<"\t\t ===================================================\n";
                 cout<<"\t\t|   Complaint Registration - Admin Menu    |\n";
@@ -459,20 +463,21 @@ int admin_menu() {
                 cout<<"\t\t||\t1. View Complaint\t\t\t ||\n";
                 cout<<"\t\t||\t2. Update Complaint Status \t\t ||\n";
                 cout<<"\t\t||\t3. Print the complaint \t\t\t ||\n";
-                cout<<"\t\t||\t4. Delete a Complaint \t\t\t ||\n";
+                // cout<<"\t\t||\t4. Delete a Complaint \t\t\t ||\n";
                 cout<<"\t\t||\t5. Logout\t\t\t\t ||\n";
                 cout<<"\t\t--------------------------------------------------\n";
                 cout<<"Enter choice: ";
                 cin>>menu;
                 switch (menu)
                 {
-                case 1 : admin.create_rrn();
-                admin.view_complaint();
+                case 1 : customer.create_rrn();
+                customer.view_complaint();
                         break;
-                case 2 :
-                admin.update_complaint();
+                case 2 : customer.create_rrn();
+                customer.update_complaint();
                         break;
-                case 3 :admin.print_complaint();
+                case 3 : customer.create_rrn();
+                customer.print_complaint();
                         break;
                 // case 4 :admin.delete_complaint();
                 //         break;
@@ -496,7 +501,6 @@ int admin_menu() {
                     cout << "\n\n\t\tInvalid login attempt. Please try again.\n" << '\n';
                 system("PAUSE");
                 system ("cls");
-                admin_menu();
             }
         return 0;
 }
@@ -507,12 +511,7 @@ int customer_menu() {
     complaint customer;
     int menu;
 
-	system("cls");
-	cout<<"\n";
-    	cout<<"\t\t ===================================================\n";
-	cout<<"\t\t|   Complaint Registration - Customer Menu     |\n";
-	cout<<"\t\t ===================================================\n\n\n";
-    	cout<<"\t\t----------------------------------------------------\n";  
+	system("cls");  
             while(1)
             {
                     cout<<"\n";
@@ -539,8 +538,11 @@ int customer_menu() {
                 customer.view_complaint();
                         break;
                 case 4 :
-                        cout<<"-------------------THANK YOU, HAVE A GOOD DAY----------------";
-				        exit(0);
+                       cout<<"You are Logged Out...!\n\n\n\n";
+				        system ("PAUSE");
+                        system("cls");
+				        return 0;
+				        break;
 				       
               default:
                         cout << "\n\n\t\tInvalid input. Please try again.\n" << '\n';
