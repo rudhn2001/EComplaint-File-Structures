@@ -62,7 +62,7 @@ void complaint::unpack() {
     i++;
     while(buffer[i]!='|')
         city+=buffer[i++];
-        phoneNo.erase();
+    phoneNo.erase();
     i++;
     while(buffer[i]!='|')
         phoneNo+=buffer[i++];
@@ -112,14 +112,13 @@ void complaint::add_complaint() {
     cin>>city;
     cout<<"Please enter the subject of the complaint(in about 10-20 words) : ";
     cin.ignore();
-    getline(cin, subj);
+    getline(cin,subj);
 	cout << "Complaint Description:";
-	cout<<"( 1000 words maximum ) \n";
-    cin.ignore();
-	getline(cin, desc);
+	cout<<"( 1000 words maximum ) : ";
+	getline(cin,desc);
     pack();
     write_to_file();
-    create_rrn();
+
 	cout<<"==========================================================================="<<endl;
     	cout << "Complaint added Successfully"<<endl;
     	cout<<"==========================================================================="<<endl;
@@ -129,7 +128,7 @@ void complaint::add_complaint() {
 
 void complaint::create_rrn() {
     fstream file;
-    int pos=0;
+    int pos;
     count=-1;
     file.open("complaint.txt",ios::in);
     while(!file.eof())
@@ -149,12 +148,12 @@ void complaint::create_rrn() {
 /* --------------------------------------function to Print the complaint-----------------------*/
 
 void complaint::print_complaint() {
-    int position=0,choice;
+    int position,choice;
     system("cls");
     string fname;
     fstream outputFile,file1;
 
-    outputFile.open("complaint.txt");
+    outputFile.open("complaint.txt",ios::in);
 
 
 
@@ -164,10 +163,6 @@ void complaint::print_complaint() {
  	cout<<"\t\t ================================================\n";
  	cout<<"\t\t|   Complaint Management System - TRAVEL AGENCY |\n";
  	cout<<"\t\t ================================================\n\n\n";
- 	outputFile<<"\n";
- 	outputFile<<"\t\t ================================================\n";
- 	outputFile<<"\t\t|   Complaint Management System - TRAVEL AGENCY |\n";
- 	outputFile<<"\t\t ================================================\n\n\n";
     cout<<"\n";
 	cout<<"---------------------------------------------------------------------------"<<endl;
 	cout <<"\t\tHere is the Complaint list\n"; 
@@ -199,7 +194,11 @@ void complaint::print_complaint() {
 
             frrn=to_string(position);
             // fname=frrn+name+"complaint";
-            file1.open("print.txt");
+            file1.open("print.txt",ios::out|ios::app);
+                 	file1<<"\n";
+ 	file1<<"\t\t ================================================\n";
+ 	file1<<"\t\t|   Complaint Management System - TRAVEL AGENCY |\n";
+ 	file1<<"\t\t ================================================\n\n\n";
 		        cout <<"Complaint Number : "<<position;
 				file1 << "Complaint Number : "<<position << endl;
 				cout <<"\n";
@@ -238,6 +237,8 @@ void complaint::print_complaint() {
 				file1 << "Status: "<<stats<<endl;
 
 				file1<<"------------------------------------------------------------------------------"<<endl;
+
+                cout<<"printed successfully";
             outputFile.close();
             file1.close();
     }
@@ -327,15 +328,15 @@ void complaint::update_complaint() {
 
 }
 
-/* --------------------------------------function to Print the complaint-----------------------*/
+/* --------------------------------------function to view the complaint-----------------------*/
 
 void complaint::view_complaint() {
-    int position=0,choice;
+    int position,choice;
     system("cls");
     string fname;
-    fstream outputFile,file1;
+    fstream outputFile;
 
-    outputFile.open("complaint.txt");
+    outputFile.open("complaint.txt",ios::in);
 
 
 
@@ -523,6 +524,7 @@ int customer_menu() {
                 switch (menu)
                 {
                 case 1 :customer.add_complaint();
+                        customer.create_rrn();
                         break;
                 case 2 :customer.print_complaint();
                         break;
