@@ -48,7 +48,6 @@ void complaint::pack() {
 void complaint::unpack() {
     int ch=1,i=0;
     name.erase();
-    i++;
     while(buffer[i]!='|')
         name+=buffer[i++];
     email.erase();
@@ -116,12 +115,11 @@ void complaint::add_complaint() {
     getline(cin, subj);
 	cout << "Complaint Description:";
 	cout<<"( 1000 words maximum ) \n";
-	cin.ignore();
+    cin.ignore();
 	getline(cin, desc);
-    create_rrn();
     pack();
     write_to_file();
-
+    create_rrn();
 	cout<<"==========================================================================="<<endl;
     	cout << "Complaint added Successfully"<<endl;
     	cout<<"==========================================================================="<<endl;
@@ -200,8 +198,8 @@ void complaint::print_complaint() {
             unpack();
 
             frrn=to_string(position);
-            fname=frrn+name+"complaint";
-            file1.open(fname);
+            // fname=frrn+name+"complaint";
+            file1.open("print.txt");
 		        cout <<"Complaint Number : "<<position;
 				file1 << "Complaint Number : "<<position << endl;
 				cout <<"\n";
@@ -532,9 +530,8 @@ int customer_menu() {
                         break;
                 case 4 :
                         cout<<"-------------------THANK YOU, HAVE A GOOD DAY----------------";
-				        system ("PAUSE");
-				        return 0;
-				        break;
+				        exit(0);
+				       
               default:
                         cout << "\n\n\t\tInvalid input. Please try again.\n" << '\n';
                 system("PAUSE");
@@ -557,19 +554,19 @@ int main() {
 
     do {
     
-        comp.create_rrn();
+
         ch=main_menu();
         switch (ch)
         {
-        case 1:
+        case 2:
             admin_menu();
             break;
-        case 2:
+        case 1:
             customer_menu();
             break;
         case 3:
             cout<<"-------------------THANK YOU, HAVE A GOOD DAY----------------";
-            sleep(3000);
+            sleep(5);
             exit(0);
         default:
             cout<<"++++++++++++++++++++++++++++INVALID INPUT!!!!! TRY AGAIN++++++++++++++";
