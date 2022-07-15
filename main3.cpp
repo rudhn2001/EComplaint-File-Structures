@@ -130,9 +130,9 @@ void complaint::add_complaint() {
 /* --------------------------------------function to generate rrn for records-----------------------*/
 
 void complaint::create_rrn() {
-    ifstream file;
-    int pos;
-    count=0;
+    fstream file;
+    int pos=0;
+    count=-1;
     file.open("complaint.txt",ios::in);
     while(!file.eof())
         {
