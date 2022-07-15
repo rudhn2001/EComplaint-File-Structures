@@ -156,6 +156,7 @@ void complaint::create_rrn() {
 
 void complaint::print_complaint() {
     int position,i=0,choice;
+    string frrn;
     system("cls");
     string fname;
     fstream outputFile,file1;
@@ -194,8 +195,9 @@ for(; i<count; i++) {
             position=choice;
             outputFile.seekg(position,ios::beg);
             getline(outputFile,buffer);
-            unpack();            
-            fname=name+"complain";
+            unpack();          
+            frrn=to_string(position);  
+            fname=frrn+name+"complain.txt";
             file1.open(fname,ios::out|ios::app);
  	file1<<"\t\t ================================================\n";
  	file1<<"\t\t|   Complaint Management System - TRAVEL AGENCY |\n";
