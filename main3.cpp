@@ -22,7 +22,7 @@ class complaint {
     void view_complaint(); //done
     void update_complaint(); //pending some stuff
     void print_complaint(); //done
-    void delete_complaint(); // not needed i believe
+    // void delete_complaint(); // not needed i believe
     void add_complaint(); //done
     int search(string key);
     int rrn,count;
@@ -31,7 +31,7 @@ class complaint {
     int list_rrn();
 
     complaint() {
-        stats='w';
+        stats="pending";
     }
 
 
@@ -132,7 +132,7 @@ void complaint::add_complaint() {
 void complaint::create_rrn() {
     ifstream file;
     int pos;
-    count=-1;
+    count=0;
     file.open("complaint.txt",ios::in);
     while(!file.eof())
         {
@@ -305,19 +305,19 @@ void complaint::update_complaint() {
             cin>>choice;;
             switch (choice)
             {
-            case 1: stats='seen';
+            case 1: stats="seen";
                 break;
             
-            case 2: stats='verified';
+            case 2: stats="verified";
                 break;
             
-            case 3: stats='executing';
+            case 3: stats="executing";
                 break;
             
-            case 4: stats='done';
+            case 4: stats="done";
                 break;
             
-            case 5: stats='cancelled';
+            case 5: stats="cancelled";
                 break;
 
             default:    cout << "\n\n\t\tInvalid choice.\n" << '\n';
@@ -331,7 +331,7 @@ void complaint::update_complaint() {
 
 /* --------------------------------------function to Print the complaint-----------------------*/
 
-void complaint::print_complaint() {
+void complaint::view_complaint() {
     int position=0,choice;
     system("cls");
     string fname;
@@ -407,7 +407,7 @@ int main_menu() {
     system("cls");
 	cout<<"\n";
     	cout<<"\t\t ================================================\n";
-	cout<<"\t\t|   Complaint Management System - TRAVEL AGENCY |\n";
+	cout<<"\t\t|   Complaint Management System - E Complaint registration |\n";
 	cout<<"\t\t ================================================\n\n\n";
 
 	cout<<"\t\t-------------------------------------------------\n";
@@ -420,7 +420,7 @@ int main_menu() {
 	cout<<"\t\t|\t3. EXIT \t\t\t\t|\n";
 	cout<<"\t\t-------------------------------------------------\n\n";
     cout<<"\t\tInput number associated with your user type (or 3 to exit) :  ====> ";
-    cin>>choice;;
+    cin>>choice;
     return choice;
 }
 
@@ -469,8 +469,8 @@ int admin_menu() {
                         break;
                 case 3 :admin.print_complaint();
                         break;
-                case 4 :admin.delete_complaint();
-                        break;
+                // case 4 :admin.delete_complaint();
+                //         break;
                 case 5 :
                 		cout<<"You are Logged Out...!\n\n\n\n";
 				        system ("PAUSE");
@@ -510,7 +510,6 @@ int customer_menu() {
     	cout<<"\t\t----------------------------------------------------\n";  
             while(1)
             {
-                system("cls");
                     cout<<"\n";
                     cout<<"\t\t ===================================================\n";
                 cout<<"\t\t|   Complaint Registration - Customer Menu    |\n";
@@ -552,11 +551,12 @@ int customer_menu() {
 int main() {
 
     system("color 02");
+    // system("cls");
     complaint comp;
     int ch;
 
-    while (1)
-    {
+    do {
+    
         comp.create_rrn();
         ch=main_menu();
         switch (ch)
@@ -574,7 +574,7 @@ int main() {
         default:
             cout<<"++++++++++++++++++++++++++++INVALID INPUT!!!!! TRY AGAIN++++++++++++++";
         }
-    }
+    }while(ch!=3);
 
     return 0;
     
