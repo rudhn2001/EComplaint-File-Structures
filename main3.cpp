@@ -159,7 +159,7 @@ void complaint::create_rrn() {
 /* --------------------------------------function to Print the complaint-----------------------*/
 
 void complaint::print_complaint() {
-    int position,choice;
+    int position,i,choice;
     system("cls");
     string fname;
     fstream outputFile,file1;
@@ -180,30 +180,25 @@ void complaint::print_complaint() {
 	cout<<"---------------------------------------------------------------------------"<<endl;
 
 
-    if(rrn_list[position]==-1) {
-    	cout << "\tThere is no Complaint to show\n\t\t\tSo The List is Empty\n\n\n";
-    }
-    else {
-            while(!outputFile.eof())
-            {
-                position=outputFile.tellg();
-                buffer.erase();
-                unpack();
-                getline(outputFile,buffer);
-                rrn_list[count++]=position;
-                cout <<"\t\t\t"<<position<<"."<<"\t"<<subj<<"\n";
-            }
+for(; i<count; i++) {
+                    cout <<"\t\t\t"<<rrn_list[i]<<".";
+                    position=rrn_list[i];
+                    buffer.erase();
+                    outputFile.seekg(position,ios::beg);
+                    getline(outputFile,buffer);
+                    unpack();
+                    cout<<"\t"<<subj<<"\n";
+                }
+            
         	cout<<"---------------------------------------------------------------------------"<<endl;
 	        cout <<"\t\tEnter the Complaint number associated with the subject : "; 
 	        cout<<"---------------------------------------------------------------------------"<<endl;
             cin>>choice;
             buffer.erase();
-            position=rrn_list[choice];
+            position=choice;
             outputFile.seekg(position,ios::beg);
             getline(outputFile,buffer);
-            unpack();
-
-            frrn=to_string(position);
+            unpack();            
             // fname=frrn+name+"complaint";
             file1.open("print.txt",ios::out|ios::app);
                  	file1<<"\n";
@@ -253,7 +248,6 @@ void complaint::print_complaint() {
             outputFile.close();
             file1.close();
     }
-}
 
 /* --------------------------------------function to update the status of the program-----------------------*/
 
@@ -472,9 +466,11 @@ int admin_menu() {
                 cin>>menu;
                 switch (menu)
                 {
-                case 1 :admin.view_complaint();
+                case 1 : admin.create_rrn();
+                admin.view_complaint();
                         break;
-                case 2 :admin.update_complaint();
+                case 2 :
+                admin.update_complaint();
                         break;
                 case 3 :admin.print_complaint();
                         break;
@@ -536,9 +532,11 @@ int customer_menu() {
                 case 1 :customer.add_complaint();
                         customer.create_rrn();
                         break;
-                case 2 :customer.print_complaint();
+                case 2 :customer.create_rrn();
+                customer.print_complaint();
                         break;
-                case 3 :customer.view_complaint();
+                case 3 :customer.create_rrn();
+                customer.view_complaint();
                         break;
                 case 4 :
                         cout<<"-------------------THANK YOU, HAVE A GOOD DAY----------------";
@@ -568,7 +566,7 @@ int main() {
 
     do {
     
-    comp.create_rrn();
+    
         ch=main_menu();
         switch (ch)
         {
