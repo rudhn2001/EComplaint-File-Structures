@@ -100,7 +100,7 @@ void complaint::add_complaint() {
     system("cls");
 	cout<<"\n";
     	cout<<"\t\t ================================================\n";
-	cout<<"\t\t|   Complaint Registration system |\n";
+	cout<<"\t\t|   E Complaint Registration |\n";
 	cout<<"\t\t ================================================\n\n\n";
 	cout <<"\nAdd Complaint Details of Customer\n";
 	cout <<"_____________________________________ \n\n";
@@ -169,7 +169,7 @@ void complaint::print_complaint() {
 
     cout<<"\n";
  	cout<<"\t\t ================================================\n";
- 	cout<<"\t\t|   Complaint Management System - TRAVEL AGENCY |\n";
+ 	cout<<"\t\t|   E Complaint Registration    |\n";
  	cout<<"\t\t ================================================\n\n\n";
     cout<<"\n";
 	cout<<"---------------------------------------------------------------------------"<<endl;
@@ -200,7 +200,7 @@ for(; i<count; i++) {
             fname=frrn+name+"complain.txt";
             file1.open(fname,ios::out|ios::app);
  	file1<<"\t\t ================================================\n";
- 	file1<<"\t\t|   Complaint Management System - TRAVEL AGENCY |\n";
+ 	file1<<"\t\t|  E Complaint Registration |\n";
  	file1<<"\t\t ================================================\n\n\n";
 		        cout <<"Complaint Number : "<<position;
 				file1 << "Complaint Number : "<<position;
@@ -263,7 +263,7 @@ void complaint::update_complaint() {
 
     cout<<"\n";
  	cout<<"\t\t ================================================\n";
- 	cout<<"\t\t|   Complaint Management System - TRAVEL AGENCY |\n";
+ 	cout<<"\t\t|   E Complaint Registration |\n";
  	cout<<"\t\t ================================================\n\n\n";
     cout<<"\n";
 	cout<<"---------------------------------------------------------------------------"<<endl;
@@ -355,7 +355,7 @@ void complaint::view_complaint() {
 
     cout<<"\n";
  	cout<<"\t\t ================================================\n";
- 	cout<<"\t\t|   Complaint Management System - TRAVEL AGENCY |\n";
+ 	cout<<"\t\t|   E Complaint Registration|\n";
  	cout<<"\t\t ================================================\n\n\n";
     cout<<"\n";
 	cout<<"---------------------------------------------------------------------------"<<endl;
@@ -416,7 +416,7 @@ int main_menu() {
     system("cls");
 	cout<<"\n";
     	cout<<"\t\t ================================================\n";
-	cout<<"\t\t|   Complaint Management System - E Complaint registration |\n";
+	cout<<"\t\t|  E Complaint System - E Complaint registration |\n";
 	cout<<"\t\t ================================================\n\n\n";
 
 	cout<<"\t\t-------------------------------------------------\n";
