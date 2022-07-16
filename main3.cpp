@@ -178,7 +178,8 @@ void complaint::print_complaint() {
 
 
 for(; i<count; i++) {
-                    cout <<"\t\t\t"<<rrn_list[i]<<".";
+
+                    cout <<"\t\t\t"<<i<<".";
                     position=rrn_list[i];
                     buffer.erase();
                     outputFile.seekg(position,ios::beg);
@@ -192,7 +193,7 @@ for(; i<count; i++) {
 	        cout<<"---------------------------------------------------------------------------"<<endl;
             cin>>choice;
             buffer.erase();
-            position=choice;
+            position=rrn_list[choice];
             outputFile.seekg(position,ios::beg);
             getline(outputFile,buffer);
             unpack();          
@@ -202,8 +203,8 @@ for(; i<count; i++) {
  	file1<<"\t\t ================================================\n";
  	file1<<"\t\t|  E Complaint Registration |\n";
  	file1<<"\t\t ================================================\n\n\n";
-		        cout <<"Complaint Number : "<<position;
-				file1 << "Complaint Number : "<<position;
+		        cout <<"Complaint ID : "<<position;
+				file1 << "Complaint ID : "<<position;
 				cout <<"\n";
                 file1<<endl;
 				cout<<"Customer Name: "<<name<<endl;
@@ -270,13 +271,8 @@ void complaint::update_complaint() {
 	cout <<"\t\tHere is the Complaint list\n"; 
 	cout<<"---------------------------------------------------------------------------"<<endl;
 
-
-    // if(rrn_list[position]==-1) {
-    // 	cout << "\tThere is no Complaint to show\n\t\t\tSo The List is Empty\n\n\n";
-    // }
-    // else {
                 for(; i<count; i++) {
-                    cout <<"\t\t\t"<<rrn_list[i]<<".";
+                    cout <<"\t\t\t"<<i<<".";
                     position=rrn_list[i];
                     buffer.erase();
                     outputFile.seekg(position,ios::beg);
@@ -290,7 +286,7 @@ void complaint::update_complaint() {
 	        cout<<"---------------------------------------------------------------------------"<<endl;
             cin>>choice;
             buffer.erase();
-            position=choice;
+            position=rrn_list[choice];
             outputFile.seekg(position,ios::beg);
             getline(outputFile,buffer);
             unpack();
@@ -363,12 +359,8 @@ void complaint::view_complaint() {
 	cout<<"---------------------------------------------------------------------------"<<endl;
 
 
-    // if(rrn_list[position]==-1) {
-    // 	cout << "\tThere is no Complaint to show\n\t\t\tSo The List is Empty\n\n\n";
-    // }
-    // else {
                 for(; i<count; i++) {
-                    cout <<"\t\t\t"<<rrn_list[i]<<".";
+                    cout <<"\t\t\t"<<i<<".";
                     position=rrn_list[i];
                     buffer.erase();
                     outputFile.seekg(position,ios::beg);
@@ -382,7 +374,7 @@ void complaint::view_complaint() {
 	        cout<<"---------------------------------------------------------------------------"<<endl;
             cin>>choice;
             buffer.erase();
-            position=choice;
+            position=rrn_list[choice];
             outputFile.seekg(position,ios::beg);
             getline(outputFile,buffer);
             unpack();
